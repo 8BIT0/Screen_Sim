@@ -10,7 +10,6 @@ class Pixel(object):
 
     def set_color(self, color = 0x0000):
         self.color = self.conv_color(color)
-        # self.canvas.delete(self.pixel_block)
         self.canvas.itemconfigure(self.pixel_block, fill = self.color)
 
     def get_color(self):
