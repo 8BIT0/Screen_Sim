@@ -1,12 +1,12 @@
 import tkinter as tk
 
 class Pixel(object):
-    def __init__(self, x = 0, y = 0, color = 0x0000, canvas = tk.Canvas):
+    def __init__(self, x = 0, y = 0, pixel_scale = 1, color = 0x0000, canvas = tk.Canvas):
         self.x = x
         self.y = y
         self.color = self.conv_color(color)
         self.canvas = canvas
-        self.pixel_block = canvas.create_rectangle(x, y, x + 1, y + 1, outline = '')
+        self.pixel_block = canvas.create_rectangle(x, y, x + pixel_scale, y + pixel_scale, outline = '')
 
     def set_color(self, color = 0x0000):
         self.color = self.conv_color(color)
