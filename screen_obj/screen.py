@@ -36,6 +36,9 @@ class Screen(object):
             return Screen_Error.Error_None
         return Screen_Error.UpdateAll_Size_Error
 
+    def get_pixel_size(self):
+        return len(self.pixel_map)
+
     def display(self):
         self.window.update()
 
