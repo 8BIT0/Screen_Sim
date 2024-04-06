@@ -8,7 +8,7 @@ class Screen_Error(object):
     UpdateAll_Size_Error = 1
 
 class Screen(object):
-    def __init__(self, screen_width = 0, screen_height = 0, scale = 1, bg_color = 0xFF0F):
+    def __init__(self, screen_width = 0, screen_height = 0, scale = 1, bg_color = 0xBBCA):
         self.width = screen_width * scale
         self.height = screen_height * scale
         self.scale = scale
@@ -24,7 +24,7 @@ class Screen(object):
         for y in range(self.height):
             for x in range(self.width):
                 single_pixel = Pixel.Pixel(x, y, scale, bg_color, self.canvas)
-                single_pixel.set_color(0xBBCA)
+                single_pixel.set_color(bg_color)
                 self.pixel_map.append(single_pixel)
 
     # all screen area fresh
@@ -35,8 +35,14 @@ class Screen(object):
                 if pixel_tmp.get_color() != color_map[index]:
                     pixel_tmp.set_color(color_map[index])
                 index += 1
+            self.display()
             return Screen_Error.Error_None
         return Screen_Error.UpdateAll_Size_Error
+
+    def set_pixel(self, x = 0, y = 0, color = 0xBBAA):
+        if (x >= 0) and (x < self.width) and (y >= 0) and (y < self.height):
+            pixel = self.pixel_map[x + (y * self.width)]
+            pixel.set_color(color)
 
     def get_pixel_size(self):
         return len(self.pixel_map)
@@ -45,7 +51,8 @@ class Screen(object):
         self.window.update()
 
 # Test Code
-test = Screen(240,160, 1)
+test = Screen(240, 160, 1)
 while True:
+    test.set_pixel(140, 20, 0x0000)
     test.display()
     Time.sleep(0.01)
