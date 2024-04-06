@@ -20,12 +20,22 @@ class Screen(object):
         self.window.geometry(str(self.width + 10) + 'x' + str(self.height + 12))
         self.canvas = tk.Canvas(self.window, width = self.width, height = self.height)
         self.canvas.pack()
-        self.canvas.place(x=4, y = 4)
+        self.canvas.place(x = 4, y = 4)
         for y in range(self.height):
             for x in range(self.width):
                 single_pixel = Pixel.Pixel(x, y, scale, bg_color, self.canvas)
                 single_pixel.set_color(bg_color)
                 self.pixel_map.append(single_pixel)
+        self.window.after(1000, self.display)
+
+        # test code
+        self.index = 0
+        self.dsp_color = [0x0000, 0xBBAA]
+        self.dsp = 0
+        self.default_color = self.dsp_color[self.dsp]
+        # test code
+
+        self.window.mainloop()
 
     # all screen area fresh
     def update(self, color_map = []):
@@ -48,11 +58,18 @@ class Screen(object):
         return len(self.pixel_map)
 
     def display(self):
-        self.window.update()
+        for i in range(10, 20):
+            for j in range(10, 20):
+                self.set_pixel(i, j, self.default_color)
+
+        self.index += 1
+        if (self.index % 10) == 0:
+            self.dsp = (self.dsp + 1) % 2
+            self.default_color = self.dsp_color[(self.dsp + 1) % 2]
+
+        self.window.after(10, self.display)
+        # self.window.update()
+        # self.window.mainloop()
 
 # Test Code
 test = Screen(240, 160, 1)
-while True:
-    test.set_pixel(140, 20, 0x0000)
-    test.display()
-    Time.sleep(0.01)

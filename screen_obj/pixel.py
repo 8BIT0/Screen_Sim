@@ -7,6 +7,7 @@ class Pixel(object):
         self.color = self.conv_color(color)
         self.canvas = canvas
         self.pixel_block = canvas.create_rectangle(x, y, x + pixel_scale, y + pixel_scale, outline = '')
+        self.canvas.pack()
 
     def set_color(self, color = 0x0000):
         self.color = self.conv_color(color)
