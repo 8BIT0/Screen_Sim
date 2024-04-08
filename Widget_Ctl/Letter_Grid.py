@@ -42,10 +42,10 @@ class Letter_Grid_Map():
 
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
+        pygame.draw.rect(surf, 'black', self.map_rect, 1)
         active = False
         if event_list.type == pygame.MOUSEBUTTONDOWN:
             active = True
-        pygame.draw.rect(surf, 'black', self.map_rect, 1)
         for y in range(self.grid_num):
             for x in range(self.grid_num):
                 grid = self.grid_map[x + (y * self.grid_num)]
