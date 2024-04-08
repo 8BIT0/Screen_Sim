@@ -1,13 +1,12 @@
 import pygame
 
 class Letter_Grid():
-    def __init__(self, x, y, edge, slid_color = [], select_color = []):
+    def __init__(self, x, y, edge, slid_color = []):
         self.x = x
         self.y = y
         self.edge = edge
         self.select_state = False
         self.slid_color = slid_color
-        self.select_color = select_color
         self.rect = pygame.Rect(self.x, self.y, self.edge, self.edge)
 
     def Rect(self):
@@ -15,9 +14,12 @@ class Letter_Grid():
     
     def SlidColor(self):
         return self.slid_color
-
-    def SelectColor(self):
-        return self.select_color
+    
+    def Selected(self):
+        return self.select_state
+    
+    def Set_Selected(self, state = False):
+        self.select_state = state
 
 class Letter_Grid_Map():
     def __init__(self, x = 0, y = 0, grid_num = 8):
@@ -30,24 +32,27 @@ class Letter_Grid_Map():
         self.grid_map = []
         cord_x = self.x
         cord_y = self.y
+        self.map_rect = pygame.Rect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
         for y in range(self.grid_num):
             cord_x = self.x
-            cord_y += self.grid_edge
             for x in range(self.grid_num):
+                self.grid_map.append(Letter_Grid(cord_x, cord_y, self.grid_edge, [138, 172, 150]))
                 cord_x += self.grid_edge
-                self.grid_map.append(Letter_Grid(cord_x, cord_y, self.grid_edge, [138, 172, 150], [61, 91, 105]))
+            cord_y += self.grid_edge
 
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
         active = False
+        if event_list.type == pygame.MOUSEBUTTONDOWN:
+            active = True
+        pygame.draw.rect(surf, 'black', self.map_rect, 1)
         for y in range(self.grid_num):
             for x in range(self.grid_num):
                 grid = self.grid_map[x + (y * self.grid_num)]
-                active = grid.Rect().collidepoint(mpos)
-
-                if not active:
+                slid = grid.Rect().collidepoint(mpos)
+                if not slid:
                     line_width = 1
-                    color = grid.SelectColor()
+                    color = 'black'
                 else:
                     line_width = 0
                     color = grid.SlidColor()
@@ -59,7 +64,7 @@ class Letter_Grid_Map():
 pygame.init()
 clock = pygame.time.Clock()
 window = pygame.display.set_mode((640, 480))
-Grid = Letter_Grid_Map(10, 10, 8)
+Grid = Letter_Grid_Map(10, 10, 10)
 
 run = True
 while run:
