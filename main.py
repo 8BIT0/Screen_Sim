@@ -2,7 +2,7 @@ from Screen_Obj import Virtial_Screen
 import pygame
 
 def main():
-    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 1, [0, 208, 208])
+    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 2, [0, 208, 208])
     Quit = False
 
     # test code
@@ -18,8 +18,8 @@ def main():
                 Quit = True
 
         # test code
-        for x in range(10, 18):
-            for y in range(10, 18):
+        for x in range(10, 20):
+            for y in range(10, 20):
                 v_Screen.set_pixel(x, y, color)
 
         if (index < 10):
