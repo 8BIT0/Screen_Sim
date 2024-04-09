@@ -26,13 +26,17 @@ class Letter_Grid_Map():
         self.x = x
         self.y = y
         self.grid_num = grid_num
-        self.grid_edge = 20
+        self.grid_edge = 25
         self.width = self.grid_edge * self.grid_num
         self.height = self.grid_edge * self.grid_num
         self.grid_map = []
         cord_x = self.x
         cord_y = self.y
         self.map_rect = pygame.Rect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
+        self.font = pygame.font.SysFont('Zpix', 300)
+        self.letter = self.font.render('', True, (255, 0, 0))
+        print(self.map_rect)
+        print(self.map_rect.center)
         for y in range(self.grid_num):
             cord_x = self.x
             for x in range(self.grid_num):
@@ -40,10 +44,21 @@ class Letter_Grid_Map():
                 cord_x += self.grid_edge
             cord_y += self.grid_edge
 
+    def Letter_Display(self, letter = ''):
+        self.letter = self.font.render(letter, True, (255, 0, 0))
+
+    def clear(self):
+        for y in range(self.grid_num):
+            for x in range(self.grid_num):
+                self.grid_map[x + (y * self.grid_num)].Set_Selected(False)
+
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
         pygame.draw.rect(surf, 'black', self.map_rect, 1)
-        
+        text_rect = self.letter.get_rect()
+        text_rect.center = self.map_rect.center
+        surf.blit(self.letter, text_rect)
+
         active = False
         for event in event_list:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -77,11 +92,10 @@ class Letter_Grid_Map():
                 pygame.draw.rect(surf, color, grid.Rect(), line_width)
                 pygame.draw.rect(surf, 'black', grid.Rect(), 1)
 
-
 pygame.init()
 clock = pygame.time.Clock()
 window = pygame.display.set_mode((640, 480))
-Grid = Letter_Grid_Map(10, 10, 10)
+Grid = Letter_Grid_Map(10, 10, 11)
 
 run = True
 while run:
@@ -91,7 +105,7 @@ while run:
     for event in event_list:
         if event.type == pygame.QUIT:
             run = False
-
+    Grid.Letter_Display('A')
     Grid.update(window, event_list)
     pygame.display.flip()
     clock.tick(60)
