@@ -96,7 +96,7 @@ class Letter_Grid_Map():
 
 pygame.init()
 clock = pygame.time.Clock()
-window = pygame.display.set_mode((640, 480))
+window = pygame.display.set_mode((640, 295))
 Grid = Letter_Grid_Map(10, 10, 11)
 
 run = True
