@@ -43,17 +43,34 @@ class Letter_Grid_Map():
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
         pygame.draw.rect(surf, 'black', self.map_rect, 1)
+        
         active = False
-        if event_list.type == pygame.MOUSEBUTTONDOWN:
-            active = True
+        for event in event_list:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                active = True
+                break
+
         for y in range(self.grid_num):
             for x in range(self.grid_num):
                 grid = self.grid_map[x + (y * self.grid_num)]
+
                 slid = grid.Rect().collidepoint(mpos)
-                if not slid:
-                    line_width = 1
-                    color = 'black'
+                if not grid.Selected():
+                    if not slid:
+                        line_width = 1
+                        color = 'black'
+                    else:
+                        line_width = 0
+                        color = grid.SlidColor()
+                        if active:
+                            grid.Set_Selected(True)
                 else:
+                    if active and slid:
+                        line_width = 1
+                        color = 'black'
+                        grid.Set_Selected(False)
+
+                if grid.Selected():
                     line_width = 0
                     color = grid.SlidColor()
 
