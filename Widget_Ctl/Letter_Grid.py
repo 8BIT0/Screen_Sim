@@ -57,6 +57,8 @@ class Letter_Grid_Map():
         pygame.draw.rect(surf, 'black', self.map_rect, 1)
         text_rect = self.letter.get_rect()
         text_rect.center = self.map_rect.center
+        text_rect[0] += 25
+        text_rect[1] -= 12
         surf.blit(self.letter, text_rect)
 
         active = False
@@ -105,7 +107,7 @@ while run:
     for event in event_list:
         if event.type == pygame.QUIT:
             run = False
-    Grid.Letter_Display('A')
+    Grid.Letter_Display('W')
     Grid.update(window, event_list)
     pygame.display.flip()
     clock.tick(60)
