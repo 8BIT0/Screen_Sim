@@ -36,6 +36,8 @@ while run:
     if Pre_Button.get(window, event_list):
         Grid.clear()
         letter_cnt -= 1
+        if letter_cnt + len(Letter) == 0:
+            letter_cnt = 0
         print('letter_cnt', letter_cnt)
 
     Grid.Letter_Display(Letter[letter_cnt])
