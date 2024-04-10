@@ -37,6 +37,8 @@ class Letter_Grid_Map():
         self.font = pygame.font.SysFont('Zpix', 300)
         # self.font = pygame.font.SysFont('DIN Condensed', 300)
         self.letter = self.font.render('', True, (255, 0, 0))
+        print(self.map_rect)
+        print(self.map_rect.center)
         for y in range(self.grid_num):
             cord_x = self.x
             for x in range(self.grid_num):
