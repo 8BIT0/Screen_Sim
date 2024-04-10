@@ -9,7 +9,7 @@ class Button():
         self.hit_state = state
         self.def_color = def_color
         self.hit_color = hit_color
-        self.hit = False
+        self.hit = True
         self.font = pygame.font.SysFont('Zpix', int(width / 8))
         self.text = self.font.render(str, True, (0, 0, 0))
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
@@ -31,7 +31,6 @@ class Button():
         if slid:
             if self.hit_state:
                 pygame.draw.rect(surf, self.hit_color, self.rect, 0)
-        
             if self.hit_state and self.hit:
                 state = True
                 self.hit = False
