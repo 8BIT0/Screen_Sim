@@ -1,3 +1,4 @@
+
 import pygame
 
 class Letter_Grid():
@@ -34,9 +35,8 @@ class Letter_Grid_Map():
         cord_y = self.y
         self.map_rect = pygame.Rect(self.x - 1, self.y - 1, self.width + 2, self.height + 2)
         self.font = pygame.font.SysFont('Zpix', 300)
+        # self.font = pygame.font.SysFont('DIN Condensed', 300)
         self.letter = self.font.render('', True, (255, 0, 0))
-        print(self.map_rect)
-        print(self.map_rect.center)
         for y in range(self.grid_num):
             cord_x = self.x
             for x in range(self.grid_num):
@@ -52,13 +52,26 @@ class Letter_Grid_Map():
             for x in range(self.grid_num):
                 self.grid_map[x + (y * self.grid_num)].Set_Selected(False)
 
+    def gen_color_map(self):
+        color_map = []
+        for y in range(self.grid_num):
+            for x in range(self.grid_num):
+                color = [255, 255, 255]
+                if self.grid_map[x + (y * self.grid_num)].Selected():
+                    color = self.grid_map[x + (y * self.grid_num)].SlidColor()
+                color_map.append(color)
+        return color_map
+
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
         pygame.draw.rect(surf, 'black', self.map_rect, 1)
         text_rect = self.letter.get_rect()
         text_rect.center = self.map_rect.center
-        text_rect[0] += 25
         text_rect[1] -= 12
+        if text_rect[0] % 10:
+            text_rect[0] += self.grid_edge - (text_rect[0] % 60)
+        text_rect[0] += 25
+
         surf.blit(self.letter, text_rect)
 
         active = False
@@ -94,23 +107,23 @@ class Letter_Grid_Map():
                 pygame.draw.rect(surf, color, grid.Rect(), line_width)
                 pygame.draw.rect(surf, 'black', grid.Rect(), 1)
 
-pygame.init()
-clock = pygame.time.Clock()
-window = pygame.display.set_mode((640, 295))
-Grid = Letter_Grid_Map(10, 10, 11)
+# pygame.init()
+# clock = pygame.time.Clock()
+# window = pygame.display.set_mode((640, 295))
+# Grid = Letter_Grid_Map(10, 10, 11)
 
-run = True
-while run:
-    window.fill((255, 255, 255))
+# run = True
+# while run:
+#     window.fill((255, 255, 255))
 
-    event_list = pygame.event.get()
-    for event in event_list:
-        if event.type == pygame.QUIT:
-            run = False
-    Grid.Letter_Display('W')
-    Grid.update(window, event_list)
-    pygame.display.flip()
-    clock.tick(60)
+#     event_list = pygame.event.get()
+#     for event in event_list:
+#         if event.type == pygame.QUIT:
+#             run = False
+#     Grid.Letter_Display('S')
+#     Grid.update(window, event_list)
+#     pygame.display.flip()
+#     clock.tick(60)
     
-pygame.quit()
-exit()
+# pygame.quit()
+# exit()

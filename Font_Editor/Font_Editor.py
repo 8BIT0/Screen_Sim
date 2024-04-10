@@ -1,29 +1,49 @@
 import pygame
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+import Widget_Ctl.Letter_Grid as Letter_Grid_Map
+import Widget_Ctl.Button as Button
+
+Letter = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()_+-=[]{}\\|;:\'",.<>/?'
 
 pygame.init()
 clock = pygame.time.Clock()
-window = pygame.display.set_mode((640, 480))
-
-list1 = OptionBox(
-    40, 40, 160, 40, (150, 150, 150), (100, 200, 255), pygame.font.SysFont(None, 30), 
-    ["option 1", "2nd option", "another option"])
+window = pygame.display.set_mode((295, 440))
+Grid = Letter_Grid_Map.Letter_Grid_Map(10, 10, 11)
+Comfirm_Button = Button.Button(9, 288, 277, 48, False, [88, 127, 35], [100, 80, 100], 'Convert')
+Nxt_Button = Button.Button(9, 338, 277, 48, False, [88, 127, 35], [100, 80, 100], 'Nxt')
+Pre_Button = Button.Button(9, 388, 277, 48, False, [88, 127, 35], [100, 80, 100], 'Pre')
 
 run = True
+letter_cnt = 0
 while run:
-    clock.tick(60)
+    window.fill((255, 255, 255))
+
     event_list = pygame.event.get()
     for event in event_list:
         if event.type == pygame.QUIT:
             run = False
 
-    selected_option = list1.update(event_list)
-    if selected_option >= 0:
-        print(selected_option)
+    Comfirm_Button.get(window, event_list)
+    if Nxt_Button.get(window, event_list):
+        Grid.clear()
+        letter_cnt += 1
+        if letter_cnt >= len(Letter):
+            letter_cnt = 0
+        print('letter_cnt', letter_cnt)
 
-    window.fill((255, 255, 255))
-    list1.draw(window)
+    if Pre_Button.get(window, event_list):
+        Grid.clear()
+        letter_cnt -= 1
+        print('letter_cnt', letter_cnt)
+
+    Grid.Letter_Display(Letter[letter_cnt])
+    Grid.update(window, event_list)
     pygame.display.flip()
+    clock.tick(60)
     
 pygame.quit()
 exit()
+
 
