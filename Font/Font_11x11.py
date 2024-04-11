@@ -1197,7 +1197,7 @@ Letter_List = ( ['a',    a], ['b',   b], ['c',   c], ['d',   d], ['e',   e],
 def get_Letter_List():
     return Letter_List
 
-def print(str = '', color = []):
+def print(str, pixel_dsp_callback, x, y, color):
      for c in str:
           pass
           
