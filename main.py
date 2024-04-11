@@ -1,8 +1,9 @@
 from Screen_Obj import Virtial_Screen
+import Font.Font_11x11 as F_11 
 import pygame
 
 def main():
-    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 2, [0, 208, 208])
+    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 1, [0, 208, 208])
     Quit = False
 
     # test code
@@ -18,10 +19,18 @@ def main():
                 Quit = True
 
         # test code
-        for x in range(10, 21):
-            for y in range(10, 21):
-                v_Screen.set_pixel(x, y, color)
-
+        x = 10
+        y = 10
+        for l in F_11.get_Letter_List():
+            for x_t in range(x, x + 11):
+                for y_t in range(y, y + 11):
+                    if l[1][y_t - y][x_t - x] == 1:
+                        v_Screen.set_pixel(x_t, y_t, 'white')
+            x += 6
+            if x > 160:
+                y += 11
+                x = 10
+        
         if (index < 10):
             index += 1
         else:

@@ -25,20 +25,25 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-    Comfirm_Button.get(window, event_list)
     if Nxt_Button.get(window, event_list):
         Grid.clear()
         letter_cnt += 1
         if letter_cnt >= len(Letter):
             letter_cnt = 0
-        print('letter_cnt', letter_cnt)
 
     if Pre_Button.get(window, event_list):
         Grid.clear()
         letter_cnt -= 1
         if letter_cnt + len(Letter) == 0:
             letter_cnt = 0
-        print('letter_cnt', letter_cnt)
+
+    if Comfirm_Button.get(window, event_list):
+        color_map = Grid.get_color_map()
+        grid_metrix = Grid.grid_metrix()
+        print("\r\n[")
+        for y in range(grid_metrix[1]):
+            print(color_map[y * grid_metrix[0] : (y + 1) * grid_metrix[0]], ',')
+        print(']\r\n')
 
     Grid.Letter_Display(Letter[letter_cnt])
     Grid.update(window, event_list)

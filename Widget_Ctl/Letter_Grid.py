@@ -2,17 +2,21 @@
 import pygame
 
 class Letter_Grid():
-    def __init__(self, x, y, edge, slid_color = []):
+    def __init__(self, x, y, edge, def_color = [], slid_color = []):
         self.x = x
         self.y = y
         self.edge = edge
         self.select_state = False
         self.slid_color = slid_color
+        self.def_color = def_color
         self.rect = pygame.Rect(self.x, self.y, self.edge, self.edge)
 
     def Rect(self):
         return self.rect
     
+    def DefColor(self):
+        return self.def_color
+
     def SlidColor(self):
         return self.slid_color
     
@@ -42,7 +46,7 @@ class Letter_Grid_Map():
         for y in range(self.grid_num):
             cord_x = self.x
             for x in range(self.grid_num):
-                self.grid_map.append(Letter_Grid(cord_x, cord_y, self.grid_edge, [138, 172, 150]))
+                self.grid_map.append(Letter_Grid(cord_x, cord_y, self.grid_edge, [0, 208, 208], [255, 255, 255]))
                 cord_x += self.grid_edge
             cord_y += self.grid_edge
 
@@ -54,18 +58,22 @@ class Letter_Grid_Map():
             for x in range(self.grid_num):
                 self.grid_map[x + (y * self.grid_num)].Set_Selected(False)
 
-    def gen_color_map(self):
+    def grid_metrix(self):
+        return (self.grid_num, self.grid_num)
+
+    def get_color_map(self):
         color_map = []
         for y in range(self.grid_num):
             for x in range(self.grid_num):
-                color = [255, 255, 255]
-                if self.grid_map[x + (y * self.grid_num)].Selected():
-                    color = self.grid_map[x + (y * self.grid_num)].SlidColor()
+                # color = self.grid_map[x + (y * self.grid_num)].DefColor()
+                # if self.grid_map[x + (y * self.grid_num)].Selected():
+                color = int(self.grid_map[x + (y * self.grid_num)].Selected())
                 color_map.append(color)
         return color_map
 
     def update(self, surf, event_list):
         mpos = pygame.mouse.get_pos()
+        pygame.draw.rect(surf, [0, 208, 208], self.map_rect)
         pygame.draw.rect(surf, 'black', self.map_rect, 1)
         text_rect = self.letter.get_rect()
         text_rect.center = self.map_rect.center
