@@ -3,7 +3,7 @@ import Font.Font_11x11 as F_11
 import pygame
 
 def main():
-    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 1, [0, 208, 208])
+    v_Screen = Virtial_Screen.Virtial_Screen(240, 160, 2, [0, 208, 208])
     Quit = False
 
     # test code
