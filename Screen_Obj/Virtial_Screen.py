@@ -23,7 +23,8 @@ class Virtial_Screen(object):
         for x in range(self.width):
             for y in range(self.height):
                 self.pixel_map[x + (y * self.width)].update()
-        pygame.display.flip()
+        pygame.display.update()
+        # pygame.dsiplay.flip()
         self.fresh.tick(60)
 
     def quit(self):

@@ -1,3 +1,7 @@
+font_width = 11
+font_height = 11
+letter_dis = 7
+
 a = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -1197,8 +1201,15 @@ Letter_List = ( ['a',    a], ['b',   b], ['c',   c], ['d',   d], ['e',   e],
 def get_Letter_List():
     return Letter_List
 
-def print(str, pixel_dsp_callback, x, y, color):
+# still can be optimize
+def print(str, pixel_dsp_callback, x_i, y_i, color):
+     x_tmp = x_i
+     y_tmp = y_i
      for c in str:
-          pass
-          
-    
+          for l in Letter_List:
+               if c in l:
+                    for x_t in range(x_tmp, x_tmp + font_width):
+                         for y_t in range(y_tmp, y_tmp + font_height):
+                              if l[1][y_t - y_tmp][x_t - x_tmp] == 1:
+                                   pixel_dsp_callback(x_t, y_t, color)
+                    x_tmp += letter_dis
